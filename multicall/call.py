@@ -1,7 +1,5 @@
-from typing import Optional
-
 from eth_utils import to_checksum_address
-from web3.auto import w3
+
 from multicall import Signature
 
 
@@ -16,7 +14,7 @@ class Call:
             self.args = None
 
         if _w3 is None:
-            self.w3 = w3
+            self.w3 = None
         else:
             self.w3 = _w3
 
@@ -28,23 +26,11 @@ class Call:
     def data(self):
         return self.signature.encode_data(self.args)
 
-    def decode_output(self, output, success: Optional[bool]=None):
-        if success is None:
-            apply_handler = lambda handler, value: handler(value)
-        else:
-            apply_handler = lambda handler, value: handler(success, value)
-
-        if success is None or success:
-            try:
-                decoded = self.signature.decode_data(output)
-            except:
-                success, decoded = False, [None] * len(self.returns)
-        else:
-            decoded = [None] * len(self.returns)
-
+    def decode_output(self, output):
+        decoded = self.signature.decode_data(output)
         if self.returns:
             return {
-                name: apply_handler(handler, value) if handler else value
+                name: handler(value) if handler else value
                 for (name, handler), value
                 in zip(self.returns, decoded)
             }
