@@ -12,6 +12,7 @@ class Network(IntEnum):
     Fantom = 250
     Heco = 128
     Arbitrum = 42161
+    Avalanche = 43114
 
 MULTICALL_ADDRESSES = {
     Network.Mainnet: '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
@@ -24,4 +25,5 @@ MULTICALL_ADDRESSES = {
     Network.Fantom: '0xb828C456600857abd4ed6C32FAcc607bD0464F4F',
     Network.Heco: '0xc9a9F768ebD123A00B52e7A0E590df2e9E998707',
     Network.Arbitrum: '0x842eC2c7D803033Edf55E478F461FC547Bc54EB2',
+    Network.Avalanche: '0x98e2060F672FD1656a07bc12D7253b5e41bF3876',
 }
